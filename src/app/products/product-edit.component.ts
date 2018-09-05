@@ -13,26 +13,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductEditComponent implements OnInit {
     pageTitle: string = 'Product Edit';
     errorMessage: string;
-
+    private dataIsValid: {[key: string] : boolean} = {};
     product: IProduct;
 
     constructor(private productService: ProductService,
                 private messageService: MessageService,
                 private route: ActivatedRoute,
-                private router: Router) { }
+                private router: Router) {
+                    
+                 }
     ngOnInit(){
-    //  this.getProduct(+this.route.snapshot.params['id']);
-        this.route.params.subscribe((params)=>{
+    //  this.getProduct(+this.route.snapshot.params['id']);        
+    /*    this.route.params.subscribe((params)=>{
             this.getProduct(+params['id']);
+        }) */
+        this.route.data.subscribe((data)=>{
+            this.onProductRetrieved(data['product']);
         })
+        
     }    
-    getProduct(id: number): void {
+ /* getProduct(id: number): void {
         this.productService.getProduct(id)
             .subscribe(
                 (product: IProduct) => this.onProductRetrieved(product),
                 (error: any) => this.errorMessage = <any>error
             );
-    }
+    } */
 
     onProductRetrieved(product: IProduct): void {
         this.product = product;
@@ -60,7 +66,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     saveProduct(): void {
-        if (true === true) {
+        if (this.isValid(null)) {
             this.productService.saveProduct(this.product)
                 .subscribe(
                     () => this.onSaveComplete(`${this.product.productName} was saved`),
@@ -78,5 +84,30 @@ export class ProductEditComponent implements OnInit {
 
         // Navigate back to the product list
         this.router.navigate(['/products']);
+    }
+    validate() : void {
+        this.dataIsValid= {};
+        if (this.product.productName &&
+            this.product.productName.length >= 3 &&
+            this.product.productCode) {
+                this.dataIsValid['info'] = true;
+        }else{
+            this.dataIsValid['info'] = false;
+        } 
+        
+        if(this.product.category && 
+           this.product.category.length >= 3){
+                this.dataIsValid['tags'] = true;
+        }else{
+                this.dataIsValid['tags'] = false;
+            }   
+    }
+    isValid(path: string) : boolean{
+        this.validate();
+        if(path){
+            return this.dataIsValid[path];
+        }
+        return (this.dataIsValid && 
+                Object.keys(this.dataIsValid).every(d => this.dataIsValid[d] === true));
     }
 }

@@ -24,7 +24,7 @@ var ProductService = (function () {
     ProductService.prototype.getProducts = function () {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(function (data) { return console.log('getProducts: ' + JSON.stringify(data)); })
+            .do(function (data) { return console.log(); })
             .catch(this.handleError);
     };
     ProductService.prototype.getProduct = function (id) {
@@ -35,7 +35,7 @@ var ProductService = (function () {
         var url = this.baseUrl + "/" + id;
         return this.http.get(url)
             .map(this.extractData)
-            .do(function (data) { return console.log('getProduct: ' + JSON.stringify(data)); })
+            .do(function (data) { return console.log(); })
             .catch(this.handleError);
     };
     ProductService.prototype.deleteProduct = function (id) {

@@ -19,7 +19,7 @@ export class ProductService {
     getProducts(): Observable<IProduct[]> {
         return this.http.get(this.baseUrl)
             .map(this.extractData)
-            .do(data => console.log('getProducts: ' + JSON.stringify(data)))
+            .do(data => console.log())
             .catch(this.handleError);
     }
 
@@ -30,7 +30,7 @@ export class ProductService {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
             .map(this.extractData)
-            .do(data => console.log('getProduct: ' + JSON.stringify(data)))
+            .do(data => console.log(/*'getProduct: ' + JSON.stringify(data)*/))
             .catch(this.handleError);
     }
 
