@@ -1,15 +1,16 @@
+<span class="glyphicon glyphicon-refresh glyphicon-spin spinner" *ngIf="loading"></span>
 <div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-brand">{{pageTitle}}</a>
             <ul class="nav navbar-nav">
-                <li>
+                <li routerLinkActive="active">
                     <a [routerLink]="['/welcome']">Home</a>
                 </li>
-                <li>
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a [routerLink]="['/products']">Product List</a>
                 </li>
-                <li>
+                <li routerLinkActive="active">
                     <a [routerLink]="['/products',0,'edit']">Add Product</a>
                 </li>
             </ul>
@@ -18,7 +19,11 @@
                     <a>Welcome {{ authService.currentUser.userName }}</a>
                 </li>
                 <li>
-                    <a>Show Messages</a>
+                    <!-- <a [routerLink]="[{outlets: {popup: ['messages']}}]" >Show Messages</a> -->
+                    <a (click)="displayMessages()" *ngIf="!this.messageService.isDisplayed">Show Messages</a>
+                </li>
+                <li>
+                    <a (click)="hideMessages()" *ngIf="this.messageService.isDisplayed">Hide Messages</a>
                 </li>
                 <li *ngIf="!authService.isLoggedIn()">
                     <a [routerLink]="['/login']">Log In</a>
@@ -30,6 +35,13 @@
         </div>
     </nav>
     <div class="container">
-        <router-outlet></router-outlet>
+        <div class="row">
+            <div class="col-md-10">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="col-md-2">
+                <router-outlet name="popup" ></router-outlet>
+            </div>
+        </div>
     </div>
 </div>

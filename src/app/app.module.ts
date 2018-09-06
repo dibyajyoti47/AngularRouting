@@ -20,7 +20,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     BrowserModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
+    InMemoryWebApiModule.forRoot(ProductData, { delay: 50 }),
     ProductModule,
     UserModule,
     MessageModule,
