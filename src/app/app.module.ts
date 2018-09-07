@@ -9,10 +9,9 @@ import { ProductData } from './products/product-data';
 import { AppComponent } from './app.component';
 
 /* Feature Modules */
-import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
-import { AppRoutingModule } from './user/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -21,7 +20,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
     BrowserModule,
     HttpModule,
     InMemoryWebApiModule.forRoot(ProductData, { delay: 50 }),
-    ProductModule,
     UserModule,
     MessageModule,
     AppRoutingModule
